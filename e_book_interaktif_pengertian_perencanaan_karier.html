@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Book Interaktif: Pengertian Karier & Pentingnya Perencanaan Karier</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & Merriweather untuk nuansa buku -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Merriweather', 'serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            900: '#1e3a8a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-100 transition-colors duration-300 font-sans antialiased selection:bg-primary-500 selection:text-white">
+
+    <!-- Header / Top Bar -->
+    <header class="sticky top-0 z-40 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <button id="mobile-menu-btn" class="lg:hidden p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 focus:outline-none" aria-label="Buka Daftar Isi">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+                <div class="flex items-center gap-2.5">
+                    <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-primary-600 to-indigo-600 flex items-center justify-center text-white shadow-md">
+                        <i data-lucide="book-open" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <h1 class="font-bold text-sm sm:text-base leading-tight text-slate-900 dark:text-white">Panduan Karier Masa Depan</h1>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 hidden sm:block">E-Book Interaktif Pengembangan Diri</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Progress & Controls -->
+            <div class="flex items-center gap-3 sm:gap-5">
+                <div class="hidden md:flex flex-col items-end">
+                    <span class="text-xs font-medium text-slate-500 dark:text-slate-400" id="progress-text">Bab 1 dari 5 (20%)</span>
+                    <div class="w-32 h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden mt-1">
+                        <div id="progress-bar" class="h-full bg-primary-600 transition-all duration-500 rounded-full" style="width: 20%"></div>
+                    </div>
+                </div>
+
+                <!-- Font Size Toggle -->
+                <button id="font-size-btn" class="p-2 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition" title="Ubah Ukuran Teks">
+                    <span class="font-serif font-bold text-sm">Aa</span>
+                </button>
+
+                <!-- Dark Mode Toggle -->
+                <button id="theme-toggle" class="p-2 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition" title="Mode Gelap/Terang">
+                    <i data-lucide="moon" class="w-5 h-5 dark:hidden"></i>
+                    <i data-lucide="sun" class="w-5 h-5 hidden dark:block text-amber-400"></i>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Progress Bar -->
+        <div class="md:hidden w-full h-1 bg-slate-200 dark:bg-slate-800">
+            <div id="mobile-progress-bar" class="h-full bg-primary-600 transition-all duration-500" style="width: 20%"></div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 lg:py-8 flex flex-col lg:flex-row gap-8 relative">
+
+        <!-- Sidebar Daftar Isi (Desktop & Mobile Drawer) -->
+        <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-72 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 transform -translate-x-full lg:translate-x-0 lg:static lg:w-72 lg:shrink-0 lg:bg-transparent lg:dark:bg-transparent lg:border-none transition-transform duration-300 ease-in-out flex flex-col">
+            <div class="p-5 lg:p-0 flex items-center justify-between lg:hidden border-b border-slate-200 dark:border-slate-800">
+                <span class="font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                    <i data-lucide="list" class="w-5 h-5 text-primary-600"></i> Daftar Isi
+                </span>
+                <button id="close-sidebar-btn" class="p-2 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <div class="p-4 lg:p-5 lg:bg-white lg:dark:bg-slate-800/60 lg:rounded-2xl lg:border lg:border-slate-200/80 lg:dark:border-slate-700/80 lg:shadow-sm lg:sticky lg:top-24 overflow-y-auto flex-1">
+                <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-3 hidden lg:block">Daftar Isi E-Book</h2>
+                <nav id="toc-nav" class="space-y-1.5">
+                    <!-- Rendered dynamically by JS -->
+                </nav>
+
+                <!-- Mini Info Card -->
+                <div class="mt-6 p-4 rounded-xl bg-gradient-to-br from-primary-50 to-indigo-50 dark:from-slate-800 dark:to-slate-800/80 border border-primary-100 dark:border-slate-700">
+                    <div class="flex items-center gap-2 text-primary-700 dark:text-primary-400 font-semibold text-xs mb-1">
+                        <i data-lucide="sparkles" class="w-4 h-4"></i> Fitur Interaktif
+                    </div>
+                    <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                        Setiap bab dilengkapi ilustrasi konsep, kartu interaktif, dan latihan mandiri untuk merancang peta jalan kariermu.
+                    </p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Overlay for Mobile Sidebar -->
+        <div id="sidebar-overlay" class="fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-40 hidden lg:hidden"></div>
+
+        <!-- E-Book Page Content Area -->
+        <main class="flex-1 min-w-0">
+            <article id="book-page" class="bg-white dark:bg-slate-800/90 rounded-3xl border border-slate-200/90 dark:border-slate-700/80 shadow-lg shadow-slate-200/40 dark:shadow-none p-6 sm:p-10 lg:p-12 transition-all duration-300">
+                <!-- Dynamic Chapter Content Injected Here -->
+            </article>
+
+            <!-- Bottom Navigation Controls -->
+            <div class="mt-6 flex items-center justify-between gap-4">
+                <button id="prev-btn" class="flex items-center gap-2 px-5 py-3 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-medium text-sm hover:bg-slate-50 dark:hover:bg-slate-700 disabled:opacity-40 disabled:cursor-not-allowed transition shadow-xs">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                    <span>Bab Sebelumnya</span>
+                </button>
+
+                <span class="text-xs sm:text-sm font-medium text-slate-500 dark:text-slate-400" id="footer-page-indicator">
+                    Halaman 1 / 5
+                </span>
+
+                <button id="next-btn" class="flex items-center gap-2 px-5 py-3 rounded-2xl bg-primary-600 hover:bg-primary-700 text-white font-medium text-sm disabled:opacity-40 disabled:cursor-not-allowed transition shadow-md shadow-primary-600/20">
+                    <span>Bab Selanjutnya</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+            </div>
+        </main>
+    </div>
+
+    <!-- Custom Toast Notification (Pengganti alert) -->
+    <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+        <div class="bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-4 py-3 rounded-2xl shadow-xl flex items-center gap-3 text-sm font-medium">
+            <i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-400 dark:text-emerald-600"></i>
+            <span id="toast-message">Pesan notifikasi</span>
+        </div>
+    </div>
+
+    <script>
+        // Data Konten E-Book
+        const chapters = [
+            {
+                id: 0,
+                badge: "SAMPUL & PENGANTAR",
+                title: "Merancang Masa Depan: Memahami Karier & Perencanaannya",
+                subtitle: "Panduan praktis untuk mengenali potensi diri, membedakan pekerjaan dengan karier, dan menyusun langkah strategis menuju kesuksesan profesional.",
+                icon: "compass",
+                render: () => `
+                    <div class="space-y-8">
+                        <!-- Hero Banner -->
+                        <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary-600 via-indigo-600 to-violet-700 p-8 sm:p-10 text-white shadow-lg">
+                            <div class="relative z-10 max-w-2xl">
+                                <span class="inline-block px-3 py-1 rounded-full bg-white/20 backdrop-blur-xs text-xs font-semibold tracking-wider uppercase mb-4">
+                                    E-Book Interaktif • Edisi Lengkap
+                                </span>
+                                <h1 class="text-2xl sm:text-4xl font-bold font-serif leading-tight mb-4">
+                                    Pengertian Karier & Pentingnya Perencanaan Karier
+                                </h1>
+                                <p class="text-primary-100 text-sm sm:text-base leading-relaxed mb-6">
+                                    "Masa depan bukan sekadar tempat yang kita tuju, melainkan sesuatu yang kita ciptakan melalui keputusan dan perencanaan hari ini."
+                                </p>
+                                <button onclick="goToChapter(1)" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white text-primary-700 font-semibold text-sm hover:bg-primary-50 transition shadow-md">
+                                    <span>Mulai Membaca Bab 1</span>
+                                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                            <!-- Decorative SVG -->
+                            <svg class="absolute right-0 bottom-0 w-64 h-64 text-white/10 transform translate-x-10 translate-y-10 pointer-events-none" viewBox="0 0 200 200" fill="currentColor">
+                                <circle cx="100" cy="100" r="80" />
+                                <circle cx="100" cy="100" r="50" fill="none" stroke="currentColor" stroke-width="8" />
+                            </svg>
+                        </div>
+
+                        <!-- Apa yang akan dipelajari -->
+                        <div>
+                            <h2 class="text-lg font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+                                <i data-lucide="map" class="w-5 h-5 text-primary-600"></i> Peta Pembelajaran E-Book Ini
+                            </h2>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/80 dark:border-slate-700 flex gap-3.5">
+                                    <div class="w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0 font-bold">01</div>
+                                    <div>
+                                        <h3 class="font-semibold text-slate-900 dark:text-white text-sm">Hakikat & Pengertian Karier</h3>
+                                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Memahami definisi karier menurut para ahli dan perbedaannya dengan pekerjaan (job).</p>
+                                    </div>
+                                </div>
+                                <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/80 dark:border-slate-700 flex gap-3.5">
+                                    <div class="w-10 h-10 rounded-xl bg-indigo-100 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-400 flex items-center justify-center shrink-0 font-bold">02</div>
+                                    <div>
+                                        <h3 class="font-semibold text-slate-900 dark:text-white text-sm">Mengapa Perencanaan Penting?</h3>
+                                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Dampak strategis perencanaan karier terhadap kepuasan kerja, finansial, dan adaptabilitas.</p>
+                                    </div>
+                                </div>
+                                <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/80 dark:border-slate-700 flex gap-3.5">
+                                    <div class="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0 font-bold">03</div>
+                                    <div>
+                                        <h3 class="font-semibold text-slate-900 dark:text-white text-sm">5 Langkah Merancang Karier</h3>
+                                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Tahapan sistematis mulai dari asesmen diri hingga eksekusi dan evaluasi berkelanjutan.</p>
+                                    </div>
+                                </div>
+                                <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/80 dark:border-slate-700 flex gap-3.5">
+                                    <div class="w-10 h-10 rounded-xl bg-amber-100 dark:bg-amber-900/40 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0 font-bold">04</div>
+                                    <div>
+                                        <h3 class="font-semibold text-slate-900 dark:text-white text-sm">Kuis & Kanvas Rencana Karier</h3>
+                                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Uji pemahamanmu dan susun draf rencana kariermu secara langsung di dalam e-book.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                id: 1,
+                badge: "BAB 1",
+                title: "Pengertian Karier: Lebih dari Sekadar Pekerjaan",
+                subtitle: "Membedah makna karier secara komprehensif dan membandingkannya dengan istilah pekerjaan maupun profesi.",
+                icon: "briefcase",
+                render: () => `
+                    <div class="space-y-6 book-text">
+                        <div class="border-b border-slate-200 dark:border-slate-700 pb-5">
+                            <span class="text-xs font-bold uppercase tracking-wider text-primary-600 dark:text-primary-400">Bab 1 • Konsep Dasar</span>
+                            <h1 class="text-2xl sm:text-3xl font-bold font-serif text-slate-900 dark:text-white mt-1">Pengertian Karier</h1>
+                        </div>
+
+                        <p class="leading-relaxed text-slate-600 dark:text-slate-300">
+                            Banyak orang sering menyamakan antara <strong>pekerjaan (job)</strong> dan <strong>karier (career)</strong>. Padahal, keduanya memiliki cakupan makna yang sangat berbeda. Secara umum, <strong>karier</strong> adalah rangkaian perjalanan, pengalaman, posisi, dan pembelajaran yang dijalani seseorang sepanjang hidupnya yang berkaitan dengan dunia kerja dan pengembangan diri.
+                        </p>
+
+                        <!-- Box Definisi Ahli -->
+                        <div class="p-5 rounded-2xl bg-primary-50/70 dark:bg-slate-800 border-l-4 border-primary-600">
+                            <h3 class="font-bold text-slate-900 dark:text-white text-sm mb-2 flex items-center gap-2">
+                                <i data-lucide="quote" class="w-4 h-4 text-primary-600"></i> Perspektif Para Ahli
+                            </h3>
+                            <ul class="space-y-2 text-sm text-slate-700 dark:text-slate-300">
+                                <li>• <strong>Donald Super:</strong> Karier adalah urutan atau rangkaian peristiwa kehidupan utama yang mencerminkan peran seseorang dalam bekerja dan masyarakat sepanjang rentang usia.</li>
+                                <li>• <strong>Greenhaus:</strong> Karier merupakan pola pengalaman terkait pekerjaan yang membentuk arah hidup seseorang dari waktu ke waktu.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Interactive Comparison Tabs -->
+                        <div class="pt-2">
+                            <h2 class="text-lg font-bold text-slate-900 dark:text-white mb-3">Eksplorasi Perbedaan Konsep (Klik Tab)</h2>
+                            <div class="flex flex-wrap gap-2 mb-4" id="concept-tabs">
+                                <button onclick="switchConceptTab('job')" id="tab-job" class="concept-tab-btn px-4 py-2 rounded-xl text-sm font-semibold bg-primary-600 text-white transition">Pekerjaan (Job)</button>
+                                <button onclick="switchConceptTab('profession')" id="tab-profession" class="concept-tab-btn px-4 py-2 rounded-xl text-sm font-semibold bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-200 transition">Profesi (Profession)</button>
+                                <button onclick="switchConceptTab('career')" id="tab-career" class="concept-tab-btn px-4 py-2 rounded-xl text-sm font-semibold bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-200 transition">Karier (Career)</button>
+                            </div>
+
+                            <div id="concept-content" class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700 transition-all">
+                                <div class="flex items-start gap-4">
+                                    <div class="p-3 rounded-xl bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 shrink-0">
+                                        <i data-lucide="clock" class="w-6 h-6"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-slate-900 dark:text-white text-base">Pekerjaan (Job) — Fokus Jangka Pendek</h4>
+                                        <p class="text-sm text-slate-600 dark:text-slate-300 mt-1 leading-relaxed">
+                                            Aktivitas rutin yang dilakukan untuk mendapatkan imbalan finansial (gaji/upah) guna memenuhi kebutuhan hidup saat ini. Seseorang bisa berganti pekerjaan berkali-kali dalam satu jalur karier.
+                                        </p>
+                                        <p class="text-xs font-medium text-primary-600 dark:text-primary-400 mt-2">Contoh: Kasir paruh waktu, staf admin kontrak, driver ojek online.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Karakteristik Karier Modern -->
+                        <div class="pt-2">
+                            <h2 class="text-lg font-bold text-slate-900 dark:text-white mb-3">3 Pilar Karier di Era Modern</h2>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                                <div class="p-4 rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/40">
+                                    <i data-lucide="trending-up" class="w-6 h-6 text-emerald-500 mb-2"></i>
+                                    <h3 class="font-bold text-sm text-slate-900 dark:text-white">Berkesinambungan</h3>
+                                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Karier tidak berhenti setelah lulus sekolah; ia terus tumbuh seiring pengalaman baru.</p>
+                                </div>
+                                <div class="p-4 rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/40">
+                                    <i data-lucide="user-check" class="w-6 h-6 text-blue-500 mb-2"></i>
+                                    <h3 class="font-bold text-sm text-slate-900 dark:text-white">Berpusat pada Individu</h3>
+                                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Pemilik utama karier adalah dirimu sendiri, bukan perusahaan tempatmu bekerja.</p>
+                                </div>
+                                <div class="p-4 rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/40">
+                                    <i data-lucide="shuffle" class="w-6 h-6 text-purple-500 mb-2"></i>
+                                    <h3 class="font-bold text-sm text-slate-900 dark:text-white">Dinamis & Fleksibel</h3>
+                                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Jalur karier saat ini tidak selalu lurus ke atas, bisa meluas lintas bidang (multipotensial).</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                id: 2,
+                badge: "BAB 2",
+                title: "Pentingnya Perencanaan Karier",
+                subtitle: "Mengapa merencanakan karier sejak dini menjadi kunci keunggulan kompetitif dan ketenangan hidup.",
+                icon: "target",
+                render: () => `
+                    <div class="space-y-6 book-text">
+                        <div class="border-b border-slate-200 dark:border-slate-700 pb-5">
+                            <span class="text-xs font-bold uppercase tracking-wider text-primary-600 dark:text-primary-400">Bab 2 • Urgensi & Manfaat</span>
+                            <h1 class="text-2xl sm:text-3xl font-bold font-serif text-slate-900 dark:text-white mt-1">Pentingnya Perencanaan Karier</h1>
+                        </div>
+
+                        <p class="leading-relaxed text-slate-600 dark:text-slate-300">
+                            <strong>Perencanaan karier (career planning)</strong> adalah proses sadar dan terstruktur di mana seseorang mengevaluasi minat, nilai, serta keterampilannya, lalu menetapkan tujuan karier dan menyusun langkah nyata untuk mencapainya. Tanpa perencanaan, seseorang ibarat kapal yang berlayar tanpa kompas: mudah terbawa arus dan sulit mencapai pelabuhan impian.
+                        </p>
+
+                        <!-- Interactive Accordion Manfaat -->
+                        <div>
+                            <h2 class="text-lg font-bold text-slate-900 dark:text-white mb-3">5 Alasan Mengapa Perencanaan Karier Sangat Krusial (Klik untuk Detail)</h2>
+                            <div class="space-y-3" id="benefits-accordion">
+                                ${[
+                                    {
+                                        title: "1. Memberikan Arah dan Fokus yang Jelas",
+                                        desc: "Kamu tidak lagi membuang waktu mengambil kursus, magang, atau pekerjaan yang tidak relevan. Setiap keputusan selaras dengan visi jangka panjangmu.",
+                                        icon: "navigation"
+                                    },
+                                    {
+                                        title: "2. Meningkatkan Kesiapan Menghadapi Perubahan Industri",
+                                        desc: "Di era otomasi dan kecerdasan buatan (AI), perencanaan karier mendorongmu untuk terus melakukan upskilling dan reskilling sebelum keterampilanmu usang.",
+                                        icon: "cpu"
+                                    },
+                                    {
+                                        title: "3. Mengoptimalkan Potensi dan Kepuasan Kerja",
+                                        desc: "Bekerja di bidang yang sesuai dengan minat dan kekuatan alami akan menekan risiko burnout (kelelahan mental) serta meningkatkan kebahagiaan.",
+                                        icon: "smile"
+                                    },
+                                    {
+                                        title: "4. Mempercepat Pertumbuhan Finansial dan Jabatan",
+                                        desc: "Dengan target kompetensi yang terukur, nilai tawarmu (bargaining power) di pasar kerja meningkat sehingga membuka peluang promosi dan kompensasi lebih baik.",
+                                        icon: "award"
+                                    },
+                                    {
+                                        title: "5. Membangun Kepercayaan Diri dalam Pengambilan Keputusan",
+                                        desc: "Ketika dihadapkan pada dua tawaran kerja atau pilihan studi lanjut, kamu memiliki parameter objektif untuk memilih yang terbaik.",
+                                        icon: "shield-check"
+                                    }
+                                ].map((item, idx) => `
+                                    <div class="border border-slate-200 dark:border-slate-700 rounded-2xl overflow-hidden bg-slate-50/50 dark:bg-slate-800/40">
+                                        <button onclick="toggleAccordion(${idx})" class="w-full px-5 py-4 text-left flex items-center justify-between gap-3 hover:bg-slate-100/70 dark:hover:bg-slate-700/40 transition">
+                                            <div class="flex items-center gap-3">
+                                                <i data-lucide="${item.icon}" class="w-5 h-5 text-primary-600 shrink-0"></i>
+                                                <span class="font-semibold text-sm sm:text-base text-slate-900 dark:text-white">${item.title}</span>
+                                            </div>
+                                            <i data-lucide="chevron-down" id="acc-icon-${idx}" class="w-4 h-4 text-slate-400 transition-transform duration-200"></i>
+                                        </button>
+                                        <div id="acc-body-${idx}" class="${idx === 0 ? '' : 'hidden'} px-5 pb-4 pt-1 text-sm text-slate-600 dark:text-slate-300 leading-relaxed border-t border-slate-200/60 dark:border-slate-700/60">
+                                            ${item.desc}
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+
+                        <!-- Perbandingan Tanpa vs Dengan Perencanaan -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+                            <div class="p-5 rounded-2xl bg-rose-50/70 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-800/60">
+                                <h3 class="font-bold text-rose-700 dark:text-rose-400 text-sm mb-2 flex items-center gap-2">
+                                    <i data-lucide="x-circle" class="w-4 h-4"></i> Tanpa Perencanaan Karier
+                                </h3>
+                                <ul class="text-xs sm:text-sm space-y-2 text-slate-700 dark:text-slate-300">
+                                    <li>• Mudah tergoda tren sesaat (FOMO) tanpa riset.</li>
+                                    <li>• Keterampilan menumpuk secara acak dan tidak mendalam.</li>
+                                    <li>• Rentan merasa terjebak dalam rutinitas pekerjaan.</li>
+                                </ul>
+                            </div>
+                            <div class="p-5 rounded-2xl bg-emerald-50/70 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800/60">
+                                <h3 class="font-bold text-emerald-700 dark:text-emerald-400 text-sm mb-2 flex items-center gap-2">
+                                    <i data-lucide="check-circle" class="w-4 h-4"></i> Dengan Perencanaan Karier
+                                </h3>
+                                <ul class="text-xs sm:text-sm space-y-2 text-slate-700 dark:text-slate-300">
+                                    <li>• Memiliki tolok ukur keberhasilan pribadi yang jelas.</li>
+                                    <li>• Portofolio dan jejaring (networking) terbangun terarah.</li>
+                                    <li>• Lebih tangguh saat menghadapi tantangan atau krisis.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                id: 3,
+                badge: "BAB 3",
+                title: "5 Tahapan Strategis Perencanaan Karier",
+                subtitle: "Langkah praktis yang dapat langsung diterapkan untuk membangun peta jalan karier impianmu.",
+                icon: "layers",
+                render: () => `
+                    <div class="space-y-6 book-text">
+                        <div class="border-b border-slate-200 dark:border-slate-700 pb-5">
+                            <span class="text-xs font-bold uppercase tracking-wider text-primary-600 dark:text-primary-400">Bab 3 • Panduan Praktis</span>
+                            <h1 class="text-2xl sm:text-3xl font-bold font-serif text-slate-900 dark:text-white mt-1">5 Tahapan Perencanaan Karier</h1>
+                        </div>
+
+                        <p class="leading-relaxed text-slate-600 dark:text-slate-300">
+                            Perencanaan karier bukanlah peristiwa satu malam, melainkan siklus berkelanjutan. Berikut adalah lima tahapan utama yang direkomendasikan oleh para konselor karier profesional:
+                        </p>
+
+                        <!-- Interactive Stepper -->
+                        <div class="space-y-4">
+                            ${[
+                                {
+                                    step: "Langkah 01",
+                                    title: "Asesmen & Pengenalan Diri (Self-Assessment)",
+                                    detail: "Kenali 4 komponen utama dirimu: Minat (apa yang kamu sukai), Bakat/Skill (apa yang kamu kuasai), Nilai Hidup (apa yang penting bagimu, misal fleksibilitas atau stabilitas), dan Kepribadian.",
+                                    tip: "Tips: Coba gunakan metode analisis SWOT pribadi atau tes minat bakat seperti RIASEC."
+                                },
+                                {
+                                    step: "Langkah 02",
+                                    title: "Eksplorasi Peluang & Pasar Kerja (Career Exploration)",
+                                    detail: "Riset berbagai profesi yang selaras dengan profil dirimu. Pelajari deskripsi tugasnya, kualifikasi yang dibutuhkan, prospek industri 5–10 tahun ke depan, serta kisaran kompensasinya.",
+                                    tip: "Tips: Lakukan informational interview dengan praktisi di LinkedIn untuk mendengar realitas kerja sehari-hari."
+                                },
+                                {
+                                    step: "Langkah 03",
+                                    title: "Penetapan Tujuan Karier (Goal Setting)",
+                                    detail: "Rumuskan target jangka pendek (1 tahun), menengah (3 tahun), dan panjang (5+ tahun) menggunakan prinsip SMART (Specific, Measurable, Achievable, Relevant, Time-bound).",
+                                    tip: "Tips: Contoh target SMART: 'Menyelesaikan sertifikasi Data Analytics dan membuat 3 proyek portofolio dalam 6 bulan ke depan.'"
+                                },
+                                {
+                                    step: "Langkah 04",
+                                    title: "Penyusunan Rencana Aksi (Action Plan)",
+                                    detail: "Jembatani kesenjangan kompetensi (skill gap). Tentukan pelatihan yang perlu diikuti, proyek yang harus dibangun, organisasi atau komunitas yang diikuti, serta mentor yang dicari.",
+                                    tip: "Tips: Pecah target besar menjadi tugas mingguan kecil agar konsisten dikerjakan."
+                                },
+                                {
+                                    step: "Langkah 05",
+                                    title: "Implementasi, Evaluasi & Adaptasi",
+                                    detail: "Eksekusi rencana dengan disiplin. Lakukan evaluasi setiap 6 bulan untuk melihat apakah tujuanmu masih relevan atau perlu disesuaikan dengan perkembangan hidup dan tren industri.",
+                                    tip: "Tips: Bersikaplah teguh pada visi, namun fleksibel pada cara mencapainya."
+                                }
+                            ].map((s) => `
+                                <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 hover:border-primary-400 dark:hover:border-primary-500 transition">
+                                    <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                                        <span class="px-3 py-1 rounded-lg bg-primary-100 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300 text-xs font-bold">${s.step}</span>
+                                    </div>
+                                    <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-1.5">${s.title}</h3>
+                                    <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-3">${s.detail}</p>
+                                    <div class="text-xs bg-white dark:bg-slate-900/80 p-3 rounded-xl border border-slate-200/70 dark:border-slate-700 text-slate-600 dark:text-slate-400 flex items-center gap-2">
+                                        <i data-lucide="lightbulb" class="w-4 h-4 text-amber-500 shrink-0"></i>
+                                        <span>${s.tip}</span>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `
+            },
+            {
+                id: 4,
+                badge: "BAB 4 • INTERAKTIF",
+                title: "Kuis Pemahaman & Kanvas Rencana Karier Pribadi",
+                subtitle: "Uji pemahamanmu dari bab-bab sebelumnya dan susun rencana kariermu secara langsung.",
+                icon: "check-square",
+                render: () => `
+                    <div class="space-y-8">
+                        <div class="border-b border-slate-200 dark:border-slate-700 pb-5">
+                            <span class="text-xs font-bold uppercase tracking-wider text-primary-600 dark:text-primary-400">Bab 4 • Evaluasi & Praktik</span>
+                            <h1 class="text-2xl sm:text-3xl font-bold font-serif text-slate-900 dark:text-white mt-1">Kuis & Kanvas Karier</h1>
+                        </div>
+
+                        <!-- Bagian 1: Kuis Interaktif -->
+                        <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+                            <h2 class="text-lg font-bold text-slate-900 dark:text-white mb-1 flex items-center gap-2">
+                                <i data-lucide="help-circle" class="w-5 h-5 text-primary-600"></i> Mini Kuis Pemahaman
+                            </h2>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mb-5">Pilih jawaban yang paling tepat untuk menguji pemahamanmu.</p>
+
+                            <div id="quiz-container" class="space-y-6">
+                                <!-- Pertanyaan 1 -->
+                                <div class="quiz-item" data-correct="1">
+                                    <p class="font-semibold text-sm text-slate-900 dark:text-white mb-2.5">1. Manakah pernyataan yang paling tepat menggambarkan perbedaan antara pekerjaan (job) dan karier (career)?</p>
+                                    <div class="space-y-2">
+                                        <button onclick="selectQuizOption(this, 0)" class="quiz-opt w-full text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs sm:text-sm hover:border-primary-500 transition">A. Pekerjaan berlangsung seumur hidup, sedangkan karier hanya sementara.</button>
+                                        <button onclick="selectQuizOption(this, 1)" class="quiz-opt w-full text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs sm:text-sm hover:border-primary-500 transition">B. Pekerjaan berfokus pada aktivitas rutin demi imbalan saat ini, sedangkan karier adalah rangkaian perjalanan dan perkembangan profesional jangka panjang.</button>
+                                        <button onclick="selectQuizOption(this, 2)" class="quiz-opt w-full text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs sm:text-sm hover:border-primary-500 transition">C. Tidak ada perbedaan antara keduanya karena sama-sama menghasilkan uang.</button>
+                                    </div>
+                                </div>
+
+                                <!-- Pertanyaan 2 -->
+                                <div class="quiz-item" data-correct="0">
+                                    <p class="font-semibold text-sm text-slate-900 dark:text-white mb-2.5">2. Apa langkah pertama yang harus dilakukan dalam proses perencanaan karier?</p>
+                                    <div class="space-y-2">
+                                        <button onclick="selectQuizOption(this, 0)" class="quiz-opt w-full text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs sm:text-sm hover:border-primary-500 transition">A. Melakukan asesmen dan pengenalan diri (minat, bakat, nilai, kepribadian).</button>
+                                        <button onclick="selectQuizOption(this, 1)" class="quiz-opt w-full text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs sm:text-sm hover:border-primary-500 transition">B. Langsung melamar ke perusahaan multinasional terbesar.</button>
+                                        <button onclick="selectQuizOption(this, 2)" class="quiz-opt w-full text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs sm:text-sm hover:border-primary-500 transition">C. Mengikuti jurusan atau pekerjaan yang dipilih oleh teman terbanyak.</button>
+                                    </div>
+                                </div>
+
+                                <!-- Pertanyaan 3 -->
+                                <div class="quiz-item" data-correct="2">
+                                    <p class="font-semibold text-sm text-slate-900 dark:text-white mb-2.5">3. Mengapa perencanaan karier penting di era teknologi yang cepat berubah?</p>
+                                    <div class="space-y-2">
+                                        <button onclick="selectQuizOption(this, 0)" class="quiz-opt w-full text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs sm:text-sm hover:border-primary-500 transition">A. Agar tidak perlu belajar lagi setelah lulus kuliah.</button>
+                                        <button onclick="selectQuizOption(this, 1)" class="quiz-opt w-full text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs sm:text-sm hover:border-primary-500 transition">B. Agar bisa bekerja di satu posisi yang sama selama 40 tahun tanpa perubahan.</button>
+                                        <button onclick="selectQuizOption(this, 2)" class="quiz-opt w-full text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs sm:text-sm hover:border-primary-500 transition">C. Membantu mengidentifikasi kebutuhan keterampilan baru (upskilling/reskilling) agar tetap relevan dan kompetitif.</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mt-5 flex flex-wrap items-center justify-between gap-4">
+                                <button onclick="checkQuiz()" class="px-5 py-2.5 rounded-xl bg-primary-600 hover:bg-primary-700 text-white text-sm font-semibold transition shadow-sm">
+                                    Periksa Jawaban Kuis
+                                </button>
+                                <div id="quiz-result" class="text-sm font-bold text-primary-600 dark:text-primary-400"></div>
+                            </div>
+                        </div>
+
+                        <!-- Bagian 2: Kanvas Rencana Karier Interaktif -->
+                        <div class="p-6 rounded-2xl bg-gradient-to-br from-indigo-50/80 to-blue-50/80 dark:from-slate-800 dark:to-slate-800/70 border border-primary-200/70 dark:border-slate-700">
+                            <h2 class="text-lg font-bold text-slate-900 dark:text-white mb-1 flex items-center gap-2">
+                                <i data-lucide="pen-tool" class="w-5 h-5 text-primary-600"></i> Kanvas Rencana Karier Pribadiku
+                            </h2>
+                            <p class="text-xs text-slate-600 dark:text-slate-400 mb-5">Isi lembar kerja di bawah ini untuk merancang langkah awal kariermu, lalu salin hasilnya untuk disimpan di catatan pribadimu.</p>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">1. Minat & Kekuatan Utama Saya</label>
+                                    <input type="text" id="plan-strength" placeholder="Contoh: Komunikasi, analisis data, desain visual" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 text-sm focus:ring-2 focus:ring-primary-500 focus:outline-none">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">2. Bidang / Peran Karier yang Diminati</label>
+                                    <input type="text" id="plan-role" placeholder="Contoh: Product Manager / UI-UX Designer" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 text-sm focus:ring-2 focus:ring-primary-500 focus:outline-none">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">3. Target Jangka Pendek (6–12 Bulan)</label>
+                                    <input type="text" id="plan-goal" placeholder="Contoh: Menyelesaikan 2 portofolio & ikut magang" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 text-sm focus:ring-2 focus:ring-primary-500 focus:outline-none">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">4. Keterampilan yang Perlu Dipelajari</label>
+                                    <input type="text" id="plan-skill" placeholder="Contoh: Public speaking, SQL, Figma" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 text-sm focus:ring-2 focus:ring-primary-500 focus:outline-none">
+                                </div>
+                            </div>
+
+                            <div class="mt-5 flex flex-wrap gap-3">
+                                <button onclick="copyCareerPlan()" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-sm font-semibold hover:opacity-90 transition">
+                                    <i data-lucide="copy" class="w-4 h-4"></i>
+                                    <span>Salin Rencana Karier Saya</span>
+                                </button>
+                                <button onclick="clearCareerPlan()" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 text-sm font-medium hover:bg-white/50 dark:hover:bg-slate-700 transition">
+                                    <span>Reset Form</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `
+            }
+        ];
+
+        // State Aplikasi
+        let currentChapter = 0;
+        let isLargeFont = false;
+        let selectedAnswers = {};
+
+        // Elemen DOM
+        const bookPageEl = document.getElementById('book-page');
+        const tocNavEl = document.getElementById('toc-nav');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const progressText = document.getElementById('progress-text');
+        const progressBar = document.getElementById('progress-bar');
+        const mobileProgressBar = document.getElementById('mobile-progress-bar');
+        const footerPageIndicator = document.getElementById('footer-page-indicator');
+
+        // Render Daftar Isi (TOC)
+        function renderTOC() {
+            tocNavEl.innerHTML = chapters.map((chap, idx) => {
+                const isActive = idx === currentChapter;
+                return `
+                    <button onclick="goToChapter(${idx})" class="w-full text-left px-3.5 py-2.5 rounded-xl flex items-start gap-3 transition ${
+                        isActive 
+                        ? 'bg-primary-600 text-white shadow-sm' 
+                        : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'
+                    }">
+                        <i data-lucide="${chap.icon}" class="w-4 h-4 mt-0.5 shrink-0 ${isActive ? 'text-white' : 'text-primary-600 dark:text-primary-400'}"></i>
+                        <div class="min-w-0">
+                            <div class="text-[10px] font-bold uppercase tracking-wider opacity-80">${chap.badge}</div>
+                            <div class="text-xs sm:text-sm font-medium truncate">${chap.title}</div>
+                        </div>
+                    </button>
+                `;
+            }).join('');
+            lucide.createIcons();
+        }
+
+        // Render Konten Bab
+        function renderChapter() {
+            const chapter = chapters[currentChapter];
+            bookPageEl.innerHTML = chapter.render();
+            
+            // Update Font Size jika aktif
+            applyFontSize();
+
+            // Update Navigasi & Progress
+            const total = chapters.length;
+            const currentNum = currentChapter + 1;
+            const percentage = Math.round((currentNum / total) * 100);
+
+            progressText.textContent = `Bagian ${currentNum} dari ${total} (${percentage}%)`;
+            progressBar.style.width = `${percentage}%`;
+            mobileProgressBar.style.width = `${percentage}%`;
+            footerPageIndicator.textContent = `Halaman ${currentNum} / ${total}`;
+
+            prevBtn.disabled = currentChapter === 0;
+            nextBtn.disabled = currentChapter === total - 1;
+
+            renderTOC();
+            lucide.createIcons();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function goToChapter(index) {
+            if (index >= 0 && index < chapters.length) {
+                currentChapter = index;
+                selectedAnswers = {}; // reset pilihan sementara saat pindah bab
+                renderChapter();
+                closeMobileSidebar();
+            }
+        }
+
+        prevBtn.addEventListener('click', () => goToChapter(currentChapter - 1));
+        nextBtn.addEventListener('click', () => goToChapter(currentChapter + 1));
+
+        // Interaktivitas Bab 1: Tab Perbandingan Konsep
+        window.switchConceptTab = function(type) {
+            const contentEl = document.getElementById('concept-content');
+            document.querySelectorAll('.concept-tab-btn').forEach(btn => {
+                btn.classList.remove('bg-primary-600', 'text-white');
+                btn.classList.add('bg-slate-100', 'dark:bg-slate-700', 'text-slate-700', 'dark:text-slate-200');
+            });
+
+            const activeBtn = document.getElementById(`tab-${type}`);
+            activeBtn.classList.remove('bg-slate-100', 'dark:bg-slate-700', 'text-slate-700', 'dark:text-slate-200');
+            activeBtn.classList.add('bg-primary-600', 'text-white');
+
+            const data = {
+                job: {
+                    icon: 'clock',
+                    color: 'blue',
+                    title: 'Pekerjaan (Job) — Fokus Jangka Pendek',
+                    desc: 'Aktivitas rutin yang dilakukan untuk mendapatkan imbalan finansial (gaji/upah) guna memenuhi kebutuhan hidup saat ini. Seseorang bisa berganti pekerjaan berkali-kali dalam satu jalur karier.',
+                    example: 'Contoh: Kasir paruh waktu, staf admin kontrak, driver ojek online.'
+                },
+                profession: {
+                    icon: 'graduation-cap',
+                    color: 'purple',
+                    title: 'Profesi (Profession) — Fokus Keahlian Spesifik',
+                    desc: 'Bidang pekerjaan yang menuntut pendidikan tinggi, pelatihan khusus, sertifikasi, serta kode etik tertentu untuk dapat menjalankannya secara legal dan kompeten.',
+                    example: 'Contoh: Dokter, Akuntan Publik, Arsitek, Advokat, Insinyur Sipil.'
+                },
+                career: {
+                    icon: 'compass',
+                    color: 'emerald',
+                    title: 'Karier (Career) — Fokus Perjalanan Jangka Panjang',
+                    desc: 'Akumulasi dari seluruh pengalaman kerja, pengembangan kompetensi, pencapaian, dan transisi peran seseorang sepanjang hidupnya menuju aktualisasi diri.',
+                    example: 'Contoh: Perjalanan dari Junior Developer → Senior Engineer → Tech Lead → CTO.'
+                }
+            };
+
+            const item = data[type];
+            contentEl.innerHTML = `
+                <div class="flex items-start gap-4">
+                    <div class="p-3 rounded-xl bg-${item.color}-100 dark:bg-${item.color}-900/40 text-${item.color}-600 dark:text-${item.color}-400 shrink-0">
+                        <i data-lucide="${item.icon}" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-900 dark:text-white text-base">${item.title}</h4>
+                        <p class="text-sm text-slate-600 dark:text-slate-300 mt-1 leading-relaxed">${item.desc}</p>
+                        <p class="text-xs font-medium text-primary-600 dark:text-primary-400 mt-2">${item.example}</p>
+                    </div>
+                </div>
+            `;
+            lucide.createIcons();
+        };
+
+        // Interaktivitas Bab 2: Accordion
+        window.toggleAccordion = function(idx) {
+            const body = document.getElementById(`acc-body-${idx}`);
+            const icon = document.getElementById(`acc-icon-${idx}`);
+            body.classList.toggle('hidden');
+            icon.classList.toggle('rotate-180');
+        };
+
+        // Interaktivitas Bab 4: Kuis
+        window.selectQuizOption = function(btnEl, optIndex) {
+            const parent = btnEl.closest('.quiz-item');
+            const allItems = Array.from(document.querySelectorAll('.quiz-item'));
+            const qIndex = allItems.indexOf(parent);
+
+            selectedAnswers[qIndex] = optIndex;
+
+            parent.querySelectorAll('.quiz-opt').forEach(opt => {
+                opt.classList.remove('border-primary-600', 'bg-primary-50', 'dark:bg-primary-900/30', 'ring-2', 'ring-primary-500/30');
+            });
+            btnEl.classList.add('border-primary-600', 'bg-primary-50', 'dark:bg-primary-900/30', 'ring-2', 'ring-primary-500/30');
+        };
+
+        window.checkQuiz = function() {
+            const items = document.querySelectorAll('.quiz-item');
+            let score = 0;
+
+            items.forEach((item, idx) => {
+                const correct = parseInt(item.getAttribute('data-correct'));
+                const userAns = selectedAnswers[idx];
+                const opts = item.querySelectorAll('.quiz-opt');
+
+                opts.forEach((opt, oIdx) => {
+                    opt.classList.remove('border-emerald-500', 'bg-emerald-50', 'dark:bg-emerald-950/40', 'border-rose-500', 'bg-rose-50', 'dark:bg-rose-950/40');
+                    if (oIdx === correct) {
+                        opt.classList.add('border-emerald-500', 'bg-emerald-50', 'dark:bg-emerald-950/40');
+                    } else if (userAns === oIdx && userAns !== correct) {
+                        opt.classList.add('border-rose-500', 'bg-rose-50', 'dark:bg-rose-950/40');
+                    }
+                });
+
+                if (userAns === correct) score++;
+            });
+
+            const resultEl = document.getElementById('quiz-result');
+            resultEl.textContent = `Skor Kamu: ${score} / ${items.length} Benar!`;
+            showToast(`Hasil kuis diperbarui: ${score} dari ${items.length} benar.`);
+        };
+
+        // Interaktivitas Bab 4: Salin Kanvas Karier
+        window.copyCareerPlan = function() {
+            const strength = document.getElementById('plan-strength').value.trim() || '-';
+            const role = document.getElementById('plan-role').value.trim() || '-';
+            const goal = document.getElementById('plan-goal').value.trim() || '-';
+            const skill = document.getElementById('plan-skill').value.trim() || '-';
+
+            const summary = `=== KANVAS RENCANA KARIER PRIBADI ===\n1. Minat & Kekuatan Utama: ${strength}\n2. Bidang/Peran Karier Diminati: ${role}\n3. Target Jangka Pendek (6-12 Bulan): ${goal}\n4. Keterampilan yang Perlu Dipelajari: ${skill}\n====================================`;
+
+            const tempTextarea = document.createElement('textarea');
+            tempTextarea.value = summary;
+            document.body.appendChild(tempTextarea);
+            tempTextarea.select();
+            try {
+                document.execCommand('copy');
+                showToast('Rencana karier berhasil disalin ke clipboard!');
+            } catch (err) {
+                showToast('Gagal menyalin teks.');
+            }
+            document.body.removeChild(tempTextarea);
+        };
+
+        window.clearCareerPlan = function() {
+            ['plan-strength', 'plan-role', 'plan-goal', 'plan-skill'].forEach(id => {
+                document.getElementById(id).value = '';
+            });
+            showToast('Formulir rencana karier telah dikosongkan.');
+        };
+
+        // Toast Helper
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-message').textContent = msg;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+
+        // Toggle Ukuran Font
+        const fontSizeBtn = document.getElementById('font-size-btn');
+        function applyFontSize() {
+            const textBlocks = document.querySelectorAll('.book-text p, .book-text li');
+            textBlocks.forEach(el => {
+                if (isLargeFont) {
+                    el.classList.add('text-base', 'sm:text-lg');
+                } else {
+                    el.classList.remove('text-base', 'sm:text-lg');
+                }
+            });
+        }
+
+        fontSizeBtn.addEventListener('click', () => {
+            isLargeFont = !isLargeFont;
+            applyFontSize();
+            showToast(isLargeFont ? 'Ukuran teks diperbesar' : 'Ukuran teks normal');
+        });
+
+        // Dark Mode Toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        themeToggle.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+        });
+
+        // Mobile Sidebar Controls
+        const sidebar = document.getElementById('sidebar');
+        const sidebarOverlay = document.getElementById('sidebar-overlay');
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const closeSidebarBtn = document.getElementById('close-sidebar-btn');
+
+        function openMobileSidebar() {
+            sidebar.classList.remove('-translate-x-full');
+            sidebarOverlay.classList.remove('hidden');
+        }
+
+        function closeMobileSidebar() {
+            sidebar.classList.add('-translate-x-full');
+            sidebarOverlay.classList.add('hidden');
+        }
+
+        mobileMenuBtn.addEventListener('click', openMobileSidebar);
+        closeSidebarBtn.addEventListener('click', closeMobileSidebar);
+        sidebarOverlay.addEventListener('click', closeMobileSidebar);
+
+        // Inisialisasi Awal
+        window.addEventListener('DOMContentLoaded', () => {
+            renderChapter();
+        });
+    </script>
+</body>
+</html>
